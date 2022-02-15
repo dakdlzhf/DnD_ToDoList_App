@@ -3,19 +3,21 @@ import { useRecoilState } from "recoil";
 import styled from "styled-components";
 import "./App.css";
 import { toDoState } from "./atoms";
-import { useForm } from "react-hook-form";
 import { DragDropContext, DropResult, Droppable } from "react-beautiful-dnd";
 import { FaTrash } from "react-icons/fa";
-import CreatePage from "./components/CreatePage";
 import { motion } from "framer-motion";
 import ParentElemnet from "./components/ParentElement";
+import Constructor from "./components/Constructor";
+import { IoDocumentTextOutline } from "react-icons/io5";
+
 const Wrapper = styled.div`
   padding: 30px;
+  min-width: 670px;
 `;
 const Herder = styled.div`
   padding: 10px;
   display: grid;
-  grid-template-columns: 2fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr;
   width: 100%;
   align-items: center;
   justify-content: center;
@@ -25,30 +27,49 @@ const Herder = styled.div`
 const HeaderTitle = styled(motion.div)`
   width: 100%;
   text-align: center;
-  font-size: 3rem;
   font-weight: bold;
+  font-size: 3rem;
+  font-family: "Song Myung", serif;
+  /* font-family: 'Jua', sans-serif; */
 `;
 const CategoryAddBox = styled.div`
-  text-align: center;
   width: 100%;
+  text-align: center;
+  cursor: pointer;
   font-size: 2.5rem;
+  font-family: "Jua", sans-serif;
 `;
-const TrashCan = styled.div`
+
+const TrashBox = styled.div`
+  width: 10%;
+  margin: auto;
   height: 50px;
   text-align: center;
   padding-top: 10px;
-  transition: all 1s;
+  transition: transform 1s;
   span {
     font-size: 2.5rem;
-    color: #eb2f06;
+    color: #1e272e;
   }
   &:hover {
-    transform: scale(1.5);
+    transform: scale(1.3);
   }
 `;
+const trachVariants = {
+  initial: {
+    scale: 1,
+    transition: {
+      duration: 1,
+    },
+  },
+  animate: {
+    scale: 1.3,
+    transition: {
+      duration: 1,
+    },
+  },
+};
 
-const Form = styled.div``;
-const Input = styled.div``;
 const BoarderContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -57,8 +78,11 @@ const BoarderContainer = styled.div`
 
 function App() {
   const [toDos, setToDos] = useRecoilState(toDoState);
-  const { register, handleSubmit, setValue } = useForm();
   const [visible, setVigible] = useState(false);
+
+  const toggle = () => {
+    setVigible((prev) => !prev);
+  };
   const saveData = () => {
     window.localStorage.setItem("TODOLIST", JSON.stringify(toDos));
   };
@@ -115,14 +139,20 @@ function App() {
     //localstorage 저장
     saveData();
   }, [toDos]);
+
   return (
     <Wrapper>
       <DragDropContext onDragEnd={onDragEnd}>
         <Herder>
-          <HeaderTitle>To Do List</HeaderTitle>
-          <CategoryAddBox>새보드생성</CategoryAddBox>
+          <HeaderTitle>
+            To Do List <IoDocumentTextOutline />
+          </HeaderTitle>
+          <CategoryAddBox onClick={toggle}>새보드생성</CategoryAddBox>
         </Herder>
-        <TrashCan>
+        {visible ? (
+          <Constructor setVigible={setVigible} visible={visible} />
+        ) : null}
+        <TrashBox>
           <Droppable droppableId="DELETE">
             {(provided) => (
               <span ref={provided.innerRef} {...provided.droppableProps}>
@@ -131,7 +161,7 @@ function App() {
               </span>
             )}
           </Droppable>
-        </TrashCan>
+        </TrashBox>
         <BoarderContainer>
           {Object.keys(toDos)?.map((toDoKey) => (
             <ParentElemnet

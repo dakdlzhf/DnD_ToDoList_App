@@ -2,7 +2,10 @@ import { atom } from "recoil";
 
 export interface IValue{
     id:number,
+    date:string,
+    title:string,
     text:string,
+    time:string,
 }
 export interface IToDos {
     [key:string]:IValue[];

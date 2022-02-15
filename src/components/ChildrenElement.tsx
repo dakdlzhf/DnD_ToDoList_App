@@ -12,6 +12,9 @@ const Item = styled.div`
   margin-top: 5px;
   padding: 10px;
   background-color: white;
+  font-size:1.2rem;
+  font-weight:bold;
+  font-family: 'Sunflower', sans-serif;
 `;
 function ChildrenElement({ toDoText, index, id }: IChildrenProps) {
   return (
