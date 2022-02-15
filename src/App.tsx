@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 import styled from "styled-components";
 import "./App.css";
@@ -13,26 +13,42 @@ const Wrapper = styled.div`
   padding: 30px;
 `;
 const Herder = styled.div`
-  display: flex;
+  padding: 10px;
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
   width: 100%;
   align-items: center;
   justify-content: center;
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
 `;
 const HeaderTitle = styled(motion.div)`
-  width: 90%;
-  margin-left: 10px;
+  width: 100%;
   text-align: center;
   font-size: 3rem;
   font-weight: bold;
 `;
-const Trash = styled.div`
+const CategoryAddBox = styled.div`
+  text-align: center;
+  width: 100%;
   font-size: 2.5rem;
-  color: #eb2f06;
-  transition: scale 1s;
+`;
+const TrashCan = styled.div`
+  height: 50px;
+  text-align: center;
+  padding-top: 10px;
+  transition: all 1s;
+  span {
+    font-size: 2.5rem;
+    color: #eb2f06;
+  }
   &:hover {
-    transform: scale(1.1);
+    transform: scale(1.5);
   }
 `;
+
+const Form = styled.div``;
+const Input = styled.div``;
 const BoarderContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -41,7 +57,8 @@ const BoarderContainer = styled.div`
 
 function App() {
   const [toDos, setToDos] = useRecoilState(toDoState);
-  const {register,handleSubmit,setValue} = useForm();
+  const { register, handleSubmit, setValue } = useForm();
+  const [visible, setVigible] = useState(false);
   const saveData = () => {
     window.localStorage.setItem("TODOLIST", JSON.stringify(toDos));
   };
@@ -103,17 +120,18 @@ function App() {
       <DragDropContext onDragEnd={onDragEnd}>
         <Herder>
           <HeaderTitle>To Do List</HeaderTitle>
-          <Trash>
-            <Droppable droppableId="DELETE">
-              {(provided) => (
-                <span ref={provided.innerRef} {...provided.droppableProps}>
-                  <FaTrash />
-                  {provided.placeholder}
-                </span>
-              )}
-            </Droppable>
-          </Trash>
+          <CategoryAddBox>새보드생성</CategoryAddBox>
         </Herder>
+        <TrashCan>
+          <Droppable droppableId="DELETE">
+            {(provided) => (
+              <span ref={provided.innerRef} {...provided.droppableProps}>
+                <FaTrash />
+                {provided.placeholder}
+              </span>
+            )}
+          </Droppable>
+        </TrashCan>
         <BoarderContainer>
           {Object.keys(toDos)?.map((toDoKey) => (
             <ParentElemnet

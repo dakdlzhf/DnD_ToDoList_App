@@ -6,17 +6,17 @@ interface IChildrenProps {
   index: number;
   id: number;
 }
-const Wrapper = styled.div`
-  background-color: black;
-  color: white;
+const Wrapper = styled.div``;
+const Item = styled.div`
+  border-radius: 5px;
+  margin-top: 5px;
   padding: 10px;
-  margin-top:5px;
+  background-color: white;
 `;
-const Item = styled.div``;
 function ChildrenElement({ toDoText, index, id }: IChildrenProps) {
   return (
     <Wrapper>
-      <Draggable draggableId={id+""} index={index}>
+      <Draggable draggableId={id + ""} index={index}>
         {(provided) => (
           <Item
             ref={provided.innerRef}
@@ -30,4 +30,4 @@ function ChildrenElement({ toDoText, index, id }: IChildrenProps) {
     </Wrapper>
   );
 }
-export default ChildrenElement;
+export default React.memo(ChildrenElement);
