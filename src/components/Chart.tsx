@@ -51,6 +51,7 @@ function Chart() {
         width={300}
         height={300}
       />
+      
     </>
   );
 }

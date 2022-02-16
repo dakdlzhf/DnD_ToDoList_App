@@ -112,7 +112,6 @@ function Constructor(props: IVisible) {
     setValue,
     formState: { errors },
   } = useForm<IForm>();
-
   const formHandler = ({ title, text }: IForm) => {
     setToDos((prev:any) => {
       const NewData = {
@@ -121,6 +120,7 @@ function Constructor(props: IVisible) {
         title,
         text,
         time: new Date().toLocaleTimeString(),
+        checking:false,
       };
       return {
         ...prev,

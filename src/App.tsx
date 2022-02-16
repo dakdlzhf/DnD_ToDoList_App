@@ -10,6 +10,7 @@ import ParentElemnet from "./components/ParentElement";
 import Constructor from "./components/Constructor";
 import { IoDocumentTextOutline } from "react-icons/io5";
 import Chart from "./components/Chart";
+import Chart2 from "./components/Chart2";
 
 const Wrapper = styled.div`
   padding: 30px;

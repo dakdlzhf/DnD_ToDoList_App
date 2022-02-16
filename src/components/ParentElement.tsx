@@ -81,6 +81,7 @@ function ParentElemnet({ toDos, toDoKey }: IBoardProps) {
       const NewText = {
         id: Date.now(),
         text: text,
+        checking:false,
       };
       return {
         ...prev,
