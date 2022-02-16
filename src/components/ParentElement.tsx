@@ -69,12 +69,9 @@ const Input = styled.input``;
 interface IBoardProps {
   toDoKey: string;
   toDos: IValue[];
-}
-
-interface IForm {
+}interface IForm {
   text: string;
 }
-
 function ParentElemnet({ toDos, toDoKey }: IBoardProps) {
   const { register, handleSubmit, setValue } = useForm<IForm>();
   const setToDos = useSetRecoilState(toDoState);

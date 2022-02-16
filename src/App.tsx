@@ -9,6 +9,7 @@ import { motion } from "framer-motion";
 import ParentElemnet from "./components/ParentElement";
 import Constructor from "./components/Constructor";
 import { IoDocumentTextOutline } from "react-icons/io5";
+import Chart from "./components/Chart";
 
 const Wrapper = styled.div`
   padding: 30px;
@@ -75,10 +76,14 @@ const BoarderContainer = styled.div`
   grid-template-columns: repeat(3, 1fr);
   gap: 5px;
 `;
+const CartInfoBox = styled.div`
+
+`;
 
 function App() {
   const [toDos, setToDos] = useRecoilState(toDoState);
   const [visible, setVigible] = useState(false);
+  const [chartBtn,setChartBtn] = useState(true);
 
   const toggle = () => {
     setVigible((prev) => !prev);
@@ -172,6 +177,9 @@ function App() {
           ))}
         </BoarderContainer>
       </DragDropContext>
+      {chartBtn? <CartInfoBox>
+        <Chart />
+      </CartInfoBox>:null}
     </Wrapper>
   );
 }

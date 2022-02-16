@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import styled from "styled-components";
 import { motion } from "framer-motion";
 import { useRecoilState } from "recoil";
-import { toDoState } from "../atoms";
+import { IToDos, toDoState } from "../atoms";
 
 const Constructore = styled(motion.div)`
   display: grid;
@@ -114,7 +114,7 @@ function Constructor(props: IVisible) {
   } = useForm<IForm>();
 
   const formHandler = ({ title, text }: IForm) => {
-    setToDos((prev) => {
+    setToDos((prev:any) => {
       const NewData = {
         id: Date.now(),
         date: curDate,

@@ -6,6 +6,7 @@ export interface IValue{
     title:string,
     text:string,
     time:string,
+    check:boolean|undefined,
 }
 export interface IToDos {
     [key:string]:IValue[];
