@@ -137,6 +137,7 @@ function ParentElemnet({ toDos, toDoKey }: IBoardProps) {
                 toDoText={it.text}
                 index={index}
                 id={it.id}
+                toDoKey={toDoKey}
               />
             ))}
             {provided.placeholder}
