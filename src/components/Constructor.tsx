@@ -106,6 +106,7 @@ interface IVisible {
 function Constructor(props: IVisible) {
   const [curDate, setCurDate] = useState(new Date().toISOString().slice(0, 10));
   const [toDos, setToDos] = useRecoilState(toDoState);
+  
   const {
     register,
     handleSubmit,

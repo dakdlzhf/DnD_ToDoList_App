@@ -6,12 +6,12 @@ import { Droppable } from "react-beautiful-dnd";
 import ChildrenElement from "./ChildrenElement";
 import { useForm } from "react-hook-form";
 import { useSetRecoilState } from "recoil";
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 const Wrapper = styled(motion.div)`
   display: flex;
   flex-direction: column;
-  background-color: #1e272e;
+  background-color: #192a56;
   width: 100%;
   height: 100%;
   min-height: 300px;
@@ -27,11 +27,11 @@ const Board = styled.div<IDragDropProps>`
   flex-grow: 1;
   background-color: ${(props) => {
     if (props.isover) {
-      return "blue";
+      return "#1e90ff";
     } else if (props.isleaving) {
-      return "red";
+      return "#ff4757";
     } else {
-      return "pink";
+      return "#ced6e0";
     }
   }}; /* motion 이랑 snapshot 같이쓰니까 에러가난다. 주의하자  */
   margin: 5px auto;
@@ -39,6 +39,24 @@ const Board = styled.div<IDragDropProps>`
   padding: 10px;
   border-radius: 15px;
   transition: background-color 0.5s ease-in-out;
+`;
+const Errormodar = styled(motion.div)`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  opacity: 0.5;
+  h3 {
+    font-size: 1rem;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 20px;
+    color: white;
+  }
+  z-index: 100;
+  text-align: center;
 `;
 const Title = styled.div`
   position: relative;
@@ -65,7 +83,20 @@ const Form = styled.form`
   width: 100%;
   text-align: center;
 `;
-const Input = styled.input``;
+const SubmitBox = styled.div`
+  width: 100%;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+  margin-bottom: 10px;
+`;
+const Input = styled.input`
+  border-radius: 10px;
+  font-size: 15px;
+  padding: 10px;
+`;
+
 interface IBoardProps {
   toDoKey: string;
   toDos: IValue[];
@@ -74,9 +105,15 @@ interface IForm {
   text: string;
 }
 function ParentElemnet({ toDos, toDoKey }: IBoardProps) {
-  const { register, handleSubmit, setValue } = useForm<IForm>();
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    formState: { errors },
+  } = useForm<IForm>();
   const setToDos = useSetRecoilState(toDoState);
   const boardAnimation = useAnimation();
+  const [smokeSwitch, setSmokeSwitch] = useState(false);
   const onValid = ({ text }: IForm) => {
     setToDos((prev: any) => {
       const NewText = {
@@ -121,10 +158,14 @@ function ParentElemnet({ toDos, toDoKey }: IBoardProps) {
           <CgCloseR />
         </RemoveIcon>
       </Title>
-
-      <Form onSubmit={handleSubmit(onValid)}>
-        <Input {...register("text")} type="text" />
-      </Form>
+      <SubmitBox>
+        <Form onSubmit={handleSubmit(onValid)}>
+          <Input
+            {...register("text",{ required: true, maxLength: 30 })}
+            type="text"
+          />
+        </Form>
+      </SubmitBox>
       <Droppable droppableId={toDoKey}>
         {(provided, snapshot) => (
           <Board
@@ -139,9 +180,20 @@ function ParentElemnet({ toDos, toDoKey }: IBoardProps) {
                 toDoText={it.text}
                 index={index}
                 id={it.id}
+                timer={it.time}
+                date={it.date}
               />
             ))}
             {provided.placeholder}
+            {/* 
+              <Errormodar
+                onClick={overLayout}
+                exit={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+              >
+                <h3>최대입력20글자를넘길수없습니다!</h3>
+              </Errormodar> */}
+            
           </Board>
         )}
       </Droppable>

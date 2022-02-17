@@ -57,25 +57,11 @@ const TrashBox = styled.div`
     transform: scale(1.3);
   }
 `;
-const trachVariants = {
-  initial: {
-    scale: 1,
-    transition: {
-      duration: 1,
-    },
-  },
-  animate: {
-    scale: 1.3,
-    transition: {
-      duration: 1,
-    },
-  },
-};
 
 const BoarderContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 5px;
+  gap: 15px;
 `;
 const CartInfoBox = styled.div`
 
@@ -87,7 +73,12 @@ function App() {
   const [chartBtn,setChartBtn] = useState(true);
 
   const toggle = () => {
-    setVigible((prev) => !prev);
+    if(Object.keys(toDos).length>=6){
+      window.alert("보드를 6개이상은 만들수 없습니다!")
+    }else{
+
+      setVigible((prev) => !prev);
+    }
   };
   const saveData = () => {
     window.localStorage.setItem("TODOLIST", JSON.stringify(toDos));

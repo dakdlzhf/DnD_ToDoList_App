@@ -1,3 +1,4 @@
+import { motion } from "framer-motion";
 import React, { useEffect, useState } from "react";
 import { Draggable } from "react-beautiful-dnd";
 import styled from "styled-components";
@@ -5,8 +6,16 @@ interface IChildrenProps {
   toDoText: string;
   index: number;
   id: number;
+  timer:string;
+  date:string;
 }
 const Wrapper = styled.div``;
+const Textbox = styled(motion.div)`
+
+`;
+const DateTimeBox = styled(motion.div)`
+  font-size:0.5rem;
+`;
 const Item = styled.div`
   border-radius: 5px;
   margin-top: 5px;
@@ -19,7 +28,7 @@ const Item = styled.div`
   justify-content: space-between;
   align-items: center;
 `;
-function ChildrenElement ({toDoText,index,id}: IChildrenProps) {
+function ChildrenElement ({toDoText,index,id,timer,date}: IChildrenProps) {
  
   return (
     <Wrapper>
