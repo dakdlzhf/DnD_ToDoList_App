@@ -120,7 +120,6 @@ function Constructor(props: IVisible) {
         title,
         text,
         time: new Date().toLocaleTimeString(),
-        checking:false,
       };
       return {
         ...prev,

@@ -33,7 +33,7 @@ const Board = styled.div<IDragDropProps>`
     } else {
       return "pink";
     }
-  }};/* motion 이랑 snapshot 같이쓰니까 에러가난다. 주의하자  */
+  }}; /* motion 이랑 snapshot 같이쓰니까 에러가난다. 주의하자  */
   margin: 5px auto;
   width: 100%;
   padding: 10px;
@@ -69,7 +69,8 @@ const Input = styled.input``;
 interface IBoardProps {
   toDoKey: string;
   toDos: IValue[];
-}interface IForm {
+}
+interface IForm {
   text: string;
 }
 function ParentElemnet({ toDos, toDoKey }: IBoardProps) {
@@ -81,7 +82,7 @@ function ParentElemnet({ toDos, toDoKey }: IBoardProps) {
       const NewText = {
         id: Date.now(),
         text: text,
-        checking:false,
+        checking: false,
       };
       return {
         ...prev,
@@ -138,7 +139,6 @@ function ParentElemnet({ toDos, toDoKey }: IBoardProps) {
                 toDoText={it.text}
                 index={index}
                 id={it.id}
-                toDoKey={toDoKey}
               />
             ))}
             {provided.placeholder}

@@ -21,21 +21,42 @@ const Wrapper = styled.div`
 `;
 function Chart() {
     const [toDos, setToDos] = useRecoilState(toDoState);
+    const keyArray :any = [];
+    const lengthArray :number[] =[];
+    const funcMap = ()=>{
+      Object.keys(toDos).map((el)=>{
+        keyArray.push(el);
+      })
+    }
+    const funcLength = ()=>{
+      Object.keys(toDos).map((el)=>{
+        lengthArray.push(toDos[el].length)
+      })
+    }
+    funcLength();
+    funcMap();
     const data = {
-        labels: ["TODO", "DOING", "DONE"],
+        labels: keyArray,
         datasets: [
           {
             label: "# of Votes",
-            data: [toDos["TODO"].length, toDos["DOING"].length,toDos["DONE"].length],
+            data:lengthArray,
             backgroundColor: [
-              "rgba(54, 162, 235, 0.2)",
-              "rgba(255, 99, 132, 0.2)",
-              "rgba(255, 206, 86, 0.2)",
+              "#ea20276f",
+              "#ffc41292",
+              "#0094317b",
+              "#0651dd7f",
+              "#9880fa86",
+              "#1b14647f",
+
             ],
             borderColor: [
-              "rgba(54, 162, 235, 1)",
-              "rgba(255, 99, 132, 1)",
-              "rgba(255, 206, 86, 1)",
+              "#ff4757",
+              "#ffa502",
+              "#2ed573",
+              "#1e90ff",
+              "#5352ed",
+              "#182C61",
             ],
             borderWidth: 1,
             hoverOffset: 10,
