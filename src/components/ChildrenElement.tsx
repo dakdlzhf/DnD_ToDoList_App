@@ -1,4 +1,3 @@
-import React, { useEffect, useState } from "react";
 import { Draggable } from "react-beautiful-dnd";
 import styled from "styled-components";
 interface IChildrenProps {
@@ -34,6 +33,7 @@ const Item = styled.div`
   }
 `;
 function ChildrenElement({ toDoText, index, id, timer, date }: IChildrenProps) {
+  
   return (
     <Wrapper>
       

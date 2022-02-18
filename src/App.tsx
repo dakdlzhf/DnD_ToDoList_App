@@ -15,12 +15,8 @@ import Timer from "./components/Timer";
 const Wrapper = styled.div`
   padding: 50px;
   min-width: 670px;
-  height:100vh;
-  width:100%;
-  background-position:center center;
-  background-size:cover;
-  background-repeat:no-repeat;
-
+  height: 100vh;
+  width: 100%;
 `;
 const Herder = styled.div`
   padding: 10px;
@@ -190,8 +186,12 @@ function App() {
       });
     }
   };
+  // 로컬스토리에 key 가있냐는 조건을 걸지않으면 새로고침 두번해야한다  
+  
   useEffect(() => {
-    setToDos(loadData);
+    if (localStorage["TODOLIST"]) {
+      setToDos(loadData);
+    }
   }, []);
   useEffect(() => {
     //localstorage 저장

@@ -6,7 +6,6 @@ import { Droppable } from "react-beautiful-dnd";
 import ChildrenElement from "./ChildrenElement";
 import { useForm } from "react-hook-form";
 import { useRecoilState, useSetRecoilState } from "recoil";
-import React, { useEffect, useState } from "react";
 
 const Wrapper = styled(motion.div)`
   display: flex;
@@ -20,10 +19,7 @@ const Wrapper = styled(motion.div)`
   border-radius: 15px;
   padding: 13px;
 `;
-interface IDragDropProps {
-  isover: boolean;
-  isleaving: boolean;
-}
+
 const Board = styled.div<IDragDropProps>`
   flex-grow: 1;
   background-color: ${(props) => {
@@ -80,12 +76,10 @@ const Input = styled.input`
   padding: 10px;
   width: 100%;
 `;
-const Today = styled.div`
-  font-size: 0.8rem;
-  color: white;
-  font-family: "Gugi", cursive;
-`;
-
+interface IDragDropProps {
+  isover: boolean;
+  isleaving: boolean;
+}
 interface IBoardProps {
   toDoKey: string;
   toDosP: IValue[];
@@ -186,4 +180,4 @@ function ParentElemnet({ toDosP, toDoKey }: IBoardProps) {
     </Wrapper>
   );
 }
-export default React.memo(ParentElemnet);
+export default ParentElemnet;

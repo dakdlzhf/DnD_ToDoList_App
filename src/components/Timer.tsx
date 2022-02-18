@@ -30,11 +30,11 @@ function Timer() {
   );
   const today = new Date().getDay();
   
-  /* useEffect(() => {
+  useEffect(() => {
     setInterval(() => {
       setTime(new Date().toLocaleTimeString());
     });  
-  }, [time]); */
+  }, [time]);
   return (
     <Box>
       <CurDate>{curDate}{week[today]}</CurDate>
