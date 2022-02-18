@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import styled from "styled-components";
 import { motion } from "framer-motion";
@@ -15,7 +15,7 @@ const Constructore = styled(motion.div)`
   color: white;
 `;
 const LeftImage = styled.div`
-  background-image:url("https://dvdprime.com/g2/data/cheditor5/2001/view_thumbnail/mania-done-dc0c94baaff144f1918df81390277650.jpg");
+  background-image:url("https://mblogthumb-phinf.pstatic.net/20120228_14/ys001suh_13304379228933K0hp_JPEG/xyny_2005.jpg?type=w2");
   background-position: center center;
   background-size:cover;
   border: none;
@@ -38,10 +38,12 @@ const Form = styled.form`
 const Input = styled.input`
   width: 100%;
   display: block;
+  border-radius:20px;
   margin-top: 20px;
   font-size: 2rem;
   font-family: "Jua", sans-serif;
-  padding: 5px;
+  padding: 10px;
+  padding-left:15px;
   
 `;
 const TextArea = styled.textarea`
@@ -51,7 +53,7 @@ const TextArea = styled.textarea`
   margin-top: 20px;
   font-size: 2rem;
   font-family: "Jua", sans-serif;
-  padding: 5px;
+  padding: 15px;
 `;
 const Button = styled.button`
   width: inherit;
@@ -106,7 +108,7 @@ interface IVisible {
 function Constructor(props: IVisible) {
   const [curDate, setCurDate] = useState(new Date().toISOString().slice(0, 10));
   const [toDos, setToDos] = useRecoilState(toDoState);
-  
+ 
   const {
     register,
     handleSubmit,
@@ -130,7 +132,9 @@ function Constructor(props: IVisible) {
     setValue("title", "");
     setValue("text", "");
     props.setVigible((prev)=>!prev);
+    
   };
+  
   return (
     <Constructore variants={produceVariants} initial="start" animate="end">
       <LeftImage />
@@ -145,7 +149,7 @@ function Constructor(props: IVisible) {
               },
             })}
             type="text"
-            placeholder="제목"
+            placeholder="Title"
           />
           <ErrorText>{errors.title?.message}</ErrorText>
           <TextArea
@@ -156,7 +160,7 @@ function Constructor(props: IVisible) {
                 message: "내용은 최소 2글자 이상 적어주셔야합니다.",
               },
             })}
-            placeholder="글작성"
+            placeholder="Description"
           />
           <ErrorText>{errors.text?.message}</ErrorText>
           <Input

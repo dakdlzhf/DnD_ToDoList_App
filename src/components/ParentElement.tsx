@@ -1,23 +1,24 @@
 import styled from "styled-components";
 import { motion, useAnimation } from "framer-motion";
 import { CgCloseR } from "react-icons/cg";
-import { IValue, toDoState } from "../atoms";
+import { IToDos, IValue, toDoState } from "../atoms";
 import { Droppable } from "react-beautiful-dnd";
 import ChildrenElement from "./ChildrenElement";
 import { useForm } from "react-hook-form";
-import { useSetRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import React, { useEffect, useState } from "react";
 
 const Wrapper = styled(motion.div)`
   display: flex;
   flex-direction: column;
-  background-color: #192a56;
+  background-color: #05c46b;
   width: 100%;
   height: 100%;
+  min-width:200px;
   min-height: 300px;
   margin: 20px auto;
   border-radius: 15px;
-  padding: 10px;
+  padding: 13px;
 `;
 interface IDragDropProps {
   isover: boolean;
@@ -39,24 +40,6 @@ const Board = styled.div<IDragDropProps>`
   padding: 10px;
   border-radius: 15px;
   transition: background-color 0.5s ease-in-out;
-`;
-const Errormodar = styled(motion.div)`
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  opacity: 0.5;
-  h3 {
-    font-size: 1rem;
-    padding-left: 10px;
-    padding-right: 10px;
-    padding-top: 20px;
-    color: white;
-  }
-  z-index: 100;
-  text-align: center;
 `;
 const Title = styled.div`
   position: relative;
@@ -95,31 +78,43 @@ const Input = styled.input`
   border-radius: 10px;
   font-size: 15px;
   padding: 10px;
+  width:100%;
+`;
+const Today = styled.div`
+  font-size:0.8rem;
+  color:white;
+  font-family: 'Gugi', cursive;
+
 `;
 
 interface IBoardProps {
   toDoKey: string;
-  toDos: IValue[];
+  toDosP: IValue[];
 }
 interface IForm {
   text: string;
 }
-function ParentElemnet({ toDos, toDoKey }: IBoardProps) {
+function ParentElemnet({ toDosP, toDoKey }: IBoardProps) {
   const {
     register,
     handleSubmit,
     setValue,
     formState: { errors },
   } = useForm<IForm>();
-  const setToDos = useSetRecoilState(toDoState);
+  const [toDos, setToDos] = useRecoilState<IToDos>(toDoState);
   const boardAnimation = useAnimation();
   const [smokeSwitch, setSmokeSwitch] = useState(false);
+  const saveData = () => {
+    window.localStorage.setItem("TODOLIST", JSON.stringify(toDos));
+  };
   const onValid = ({ text }: IForm) => {
+    
     setToDos((prev: any) => {
       const NewText = {
         id: Date.now(),
+        date:new Date().toISOString().slice(0, 10),
         text: text,
-        checking: false,
+        time:new Date().toLocaleTimeString(),
       };
       return {
         ...prev,
@@ -127,9 +122,10 @@ function ParentElemnet({ toDos, toDoKey }: IBoardProps) {
       };
     });
     setValue("text", "");
+    saveData()
   };
   const cunfirm = () => {
-    const x = window.confirm("정말삭제하시게요?");
+    const x = window.confirm("보드에 모든 내용이 사라집니다 .삭제하시겠습니까?");
     if (x) {
       onDelete();
     } else {
@@ -148,6 +144,9 @@ function ParentElemnet({ toDos, toDoKey }: IBoardProps) {
   const swingEvent = () => {
     boardAnimation.start({
       rotate: [-10, 10, -10, 10, 0],
+      transition:{
+        duration:0.5,
+      }
     });
   };
   return (
@@ -163,6 +162,7 @@ function ParentElemnet({ toDos, toDoKey }: IBoardProps) {
           <Input
             {...register("text",{ required: true, maxLength: 30 })}
             type="text"
+            placeholder="Write here"
           />
         </Form>
       </SubmitBox>
@@ -174,7 +174,7 @@ function ParentElemnet({ toDos, toDoKey }: IBoardProps) {
             isleaving={Boolean(snapshot.draggingFromThisWith)}
             {...provided.droppableProps}
           >
-            {toDos?.map((it, index) => (
+            {toDosP?.map((it, index) => (
               <ChildrenElement
                 key={it.id}
                 toDoText={it.text}
@@ -185,14 +185,6 @@ function ParentElemnet({ toDos, toDoKey }: IBoardProps) {
               />
             ))}
             {provided.placeholder}
-            {/* 
-              <Errormodar
-                onClick={overLayout}
-                exit={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-              >
-                <h3>최대입력20글자를넘길수없습니다!</h3>
-              </Errormodar> */}
             
           </Board>
         )}

@@ -6,16 +6,10 @@ interface IChildrenProps {
   toDoText: string;
   index: number;
   id: number;
-  timer:string;
-  date:string;
+  timer: string;
+  date: string;
 }
 const Wrapper = styled.div``;
-const Textbox = styled(motion.div)`
-
-`;
-const DateTimeBox = styled(motion.div)`
-  font-size:0.5rem;
-`;
 const Item = styled.div`
   border-radius: 5px;
   margin-top: 5px;
@@ -27,11 +21,23 @@ const Item = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  span{
+    text-align:start;
+    word-break:break-all; 
+  }
+  div{
+    text-align:end;
+    width:100px;
+    font-size:0.6rem;
+    display:flex;
+    flex-direction:column;
+
+  }
 `;
-function ChildrenElement ({toDoText,index,id,timer,date}: IChildrenProps) {
- 
+function ChildrenElement({ toDoText, index, id, timer, date }: IChildrenProps) {
   return (
     <Wrapper>
+      
       <Draggable draggableId={id + ""} index={index}>
         {(provided) => (
           <Item
@@ -39,11 +45,13 @@ function ChildrenElement ({toDoText,index,id,timer,date}: IChildrenProps) {
             {...provided.draggableProps}
             {...provided.dragHandleProps}
           >
-            {toDoText}
+            <span> {toDoText} </span>
+            <div> <p>{date}</p><p>{timer}</p> </div>
           </Item>
         )}
       </Draggable>
+      
     </Wrapper>
   );
-};
+}
 export default ChildrenElement;

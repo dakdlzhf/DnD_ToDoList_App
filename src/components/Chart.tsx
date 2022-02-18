@@ -7,72 +7,80 @@ import { toDoState } from "../atoms";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-
-
 const Wrapper = styled.div`
   width: 100%;
   height: 300px;
-  margin: 50px auto;
-  border: 1px solid black;
-  padding: 50px;
-  position: relative;
-  canvas {
+  border: 1px solid;
+  margin-top: 20px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+`;
+const ChartBox = styled.div`
+  text-align: center;
+  h1 {
+    margin-top: 20px;
+    font-family: "Jua", sans-serif;
+  }
+  div {
+    canvas {
+      width: 100px;
+      height: 100px;
+    }
   }
 `;
-function Chart() {
-    const [toDos, setToDos] = useRecoilState(toDoState);
-    const keyArray :any = [];
-    const lengthArray :number[] =[];
-    const funcMap = ()=>{
-      Object.keys(toDos).map((el)=>{
-        keyArray.push(el);
-      })
-    }
-    const funcLength = ()=>{
-      Object.keys(toDos).map((el)=>{
-        lengthArray.push(toDos[el].length)
-      })
-    }
-    funcLength();
-    funcMap();
-    const data = {
-        labels: keyArray,
-        datasets: [
-          {
-            label: "# of Votes",
-            data:lengthArray,
-            backgroundColor: [
-              "#eb2f06",
-              "#1e3799",
-              "#FFC312",
-              "#009432",
-              "#FDA7DF",
-              "#7efff5",
 
-            ],
-            borderColor: [
-              "#EA2027",
-              "#0652DD",
-              "#FFC312",
-              "#78e08f",
-              "#D980FA",
-              "#7efff5",
-            ],
-            borderWidth: 1,
-            hoverOffset: 10,
-          },
+function Chart() {
+  const [toDos, setToDos] = useRecoilState(toDoState);
+  const keyArray: any = [];
+  const lengthArray: number[] = [];
+  const funcMap = () => {
+    Object.keys(toDos)?.map((el) => {
+      keyArray.push(el);
+    });
+  };
+  const funcLength = () => {
+    Object.keys(toDos)?.map((el) => {
+      lengthArray.push(toDos[el].length);
+    });
+  };
+  funcLength();
+  funcMap();
+  const data = {
+    labels: keyArray,
+    datasets: [
+      {
+        label: "# of Votes",
+        data: lengthArray,
+        backgroundColor: [
+          "#eb2f06",
+          "#1e3799",
+          "#FFC312",
+          "#009432",
+          "#FDA7DF",
+          "#7efff5",
         ],
-      };
+        borderColor: [
+          "#EA2027",
+          "#0652DD",
+          "#FFC312",
+          "#78e08f",
+          "#D980FA",
+          "#7efff5",
+        ],
+        borderWidth: 0,
+        hoverOffset: 5,
+      },
+    ],
+  };
   return (
     <>
-      <Doughnut
-        style={{ marginTop: "20px" }}
-        data={data}
-        options={{ responsive: false }}
-        width={300}
-        height={300}
-      />
-      
+      <ChartBox>
+        <h1>ToDoList Chart</h1>
+        <div style={{ width:"30vw", height: "30vh", margin: "5px auto" }}>
+          <Doughnut data={data} options={{ maintainAspectRatio: false }} />
+        </div>
+      </ChartBox>
     </>
   );
 }
