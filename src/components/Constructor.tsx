@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import styled from "styled-components";
 import { motion } from "framer-motion";
@@ -132,7 +132,6 @@ function Constructor(props: IVisible) {
     setValue("title", "");
     setValue("text", "");
     props.setVigible((prev)=>!prev);
-    
   };
   
   return (
@@ -174,4 +173,4 @@ function Constructor(props: IVisible) {
     </Constructore>
   );
 }
-export default Constructor;
+export default React.memo(Constructor);

@@ -34,6 +34,7 @@ function Chart() {
   const [toDos, setToDos] = useRecoilState(toDoState);
   const keyArray: any = [];
   const lengthArray: number[] = [];
+  const defaultArray:number[] = [1,2,3];
   const funcMap = () => {
     Object.keys(toDos)?.map((el) => {
       keyArray.push(el);

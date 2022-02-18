@@ -33,7 +33,7 @@ function Timer() {
   /* useEffect(() => {
     setInterval(() => {
       setTime(new Date().toLocaleTimeString());
-    });
+    });  
   }, [time]); */
   return (
     <Box>

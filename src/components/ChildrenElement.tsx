@@ -1,4 +1,3 @@
-import { motion } from "framer-motion";
 import React, { useEffect, useState } from "react";
 import { Draggable } from "react-beautiful-dnd";
 import styled from "styled-components";

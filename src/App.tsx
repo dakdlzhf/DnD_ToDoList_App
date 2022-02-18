@@ -132,9 +132,8 @@ const chartVariants = {
 };
 
 function App() {
-  const [toDos, setToDos] = useRecoilState<IToDos>(toDoState);
+  const [toDos, setToDos] = useRecoilState(toDoState);
   const [visible, setVigible] = useState(false);
-
   const toggle = () => {
     if (Object.keys(toDos).length >= 6) {
       window.alert("보드를 6개이상은 만들수 없습니다!");

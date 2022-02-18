@@ -14,7 +14,7 @@ const Wrapper = styled(motion.div)`
   background-color: #05c46b;
   width: 100%;
   height: 100%;
-  min-width:200px;
+  min-width: 200px;
   min-height: 300px;
   margin: 20px auto;
   border-radius: 15px;
@@ -78,13 +78,12 @@ const Input = styled.input`
   border-radius: 10px;
   font-size: 15px;
   padding: 10px;
-  width:100%;
+  width: 100%;
 `;
 const Today = styled.div`
-  font-size:0.8rem;
-  color:white;
-  font-family: 'Gugi', cursive;
-
+  font-size: 0.8rem;
+  color: white;
+  font-family: "Gugi", cursive;
 `;
 
 interface IBoardProps {
@@ -101,20 +100,15 @@ function ParentElemnet({ toDosP, toDoKey }: IBoardProps) {
     setValue,
     formState: { errors },
   } = useForm<IForm>();
-  const [toDos, setToDos] = useRecoilState<IToDos>(toDoState);
+  const [toDos, setToDos] = useRecoilState(toDoState);
   const boardAnimation = useAnimation();
-  const [smokeSwitch, setSmokeSwitch] = useState(false);
-  const saveData = () => {
-    window.localStorage.setItem("TODOLIST", JSON.stringify(toDos));
-  };
   const onValid = ({ text }: IForm) => {
-    
     setToDos((prev: any) => {
       const NewText = {
         id: Date.now(),
-        date:new Date().toISOString().slice(0, 10),
+        date: new Date().toISOString().slice(0, 10),
         text: text,
-        time:new Date().toLocaleTimeString(),
+        time: new Date().toLocaleTimeString(),
       };
       return {
         ...prev,
@@ -122,10 +116,11 @@ function ParentElemnet({ toDosP, toDoKey }: IBoardProps) {
       };
     });
     setValue("text", "");
-    saveData()
   };
   const cunfirm = () => {
-    const x = window.confirm("보드에 모든 내용이 사라집니다 .삭제하시겠습니까?");
+    const x = window.confirm(
+      "보드에 모든 내용이 사라집니다 .삭제하시겠습니까?"
+    );
     if (x) {
       onDelete();
     } else {
@@ -144,9 +139,9 @@ function ParentElemnet({ toDosP, toDoKey }: IBoardProps) {
   const swingEvent = () => {
     boardAnimation.start({
       rotate: [-10, 10, -10, 10, 0],
-      transition:{
-        duration:0.5,
-      }
+      transition: {
+        duration: 0.5,
+      },
     });
   };
   return (
@@ -160,7 +155,7 @@ function ParentElemnet({ toDosP, toDoKey }: IBoardProps) {
       <SubmitBox>
         <Form onSubmit={handleSubmit(onValid)}>
           <Input
-            {...register("text",{ required: true, maxLength: 30 })}
+            {...register("text", { required: true, maxLength: 30 })}
             type="text"
             placeholder="Write here"
           />
@@ -185,7 +180,6 @@ function ParentElemnet({ toDosP, toDoKey }: IBoardProps) {
               />
             ))}
             {provided.placeholder}
-            
           </Board>
         )}
       </Droppable>
