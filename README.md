@@ -18,4 +18,9 @@
   [사이트로 이동](https://dazzling-feynman-f7dd73.netlify.app)
   
   ![dnd](https://user-images.githubusercontent.com/80139780/155117792-8062ee59-8ed7-4294-b09a-a66165768762.gif)
+  
+  
+![React App - Chrome 2022-02-22 오후 7_59_43](https://user-images.githubusercontent.com/80139780/155119022-f105aafb-9a05-46b7-a021-8e45387fdcb3.png)
+
+
        
